@@ -88,6 +88,18 @@ public class MovieService {
         Movie saved = movieRepository.save(movie);
         return MovieDTO.fromEntity(saved);
     }
+
+    public List<MovieDTO> getPopularMovies() {
+        TMDBResponse response = tmdbService.getPopularMovies();
+        
+        if (response == null || response.getResults() == null) {
+            return List.of();
+        }
+        
+        return response.getResults().stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
+    }
     
     private MovieDTO convertToDTO(TMDBMovie tmdbMovie) {
         // Check if movie exists in database

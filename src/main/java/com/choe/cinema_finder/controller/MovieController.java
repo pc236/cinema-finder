@@ -18,7 +18,7 @@ import com.choe.cinema_finder.service.MovieService;
 
 @RestController
 @RequestMapping("/api/movies")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://cinema-finder-choe.s3-website-us-east-1.amazonaws.com"})
 public class MovieController {
     
     @Autowired
@@ -33,6 +33,12 @@ public class MovieController {
     @GetMapping("/trending")
     public ResponseEntity<List<MovieDTO>> getTrendingMovies() {
         List<MovieDTO> movies = movieService.getTrendingMovies();
+        return ResponseEntity.ok(movies);
+    }
+
+    @GetMapping("/popular")
+    public ResponseEntity<List<MovieDTO>> getPopularMovies() {
+        List<MovieDTO> movies = movieService.getPopularMovies();
         return ResponseEntity.ok(movies);
     }
     
